@@ -1,0 +1,41 @@
+
+PLAY [iabaquero] ***************************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [iabaquero]
+
+TASK [install apache] **********************************************************
+ok: [iabaquero]
+
+TASK [restart apache] **********************************************************
+changed: [iabaquero]
+
+TASK [install EPEL] ************************************************************
+ok: [iabaquero]
+
+TASK [remove tree package] *****************************************************
+ok: [iabaquero]
+
+TASK [set hostname] ************************************************************
+ok: [iabaquero]
+
+TASK [create a new user with my Seneca ID and sudo access] *********************
+ok: [iabaquero]
+
+TASK [Configure SSH key for the new user] **************************************
+ok: [iabaquero]
+
+TASK [Setup directory structure for labs] **************************************
+ok: [iabaquero] => (item=1)
+ok: [iabaquero] => (item=2)
+ok: [iabaquero] => (item=3)
+ok: [iabaquero] => (item=4)
+ok: [iabaquero] => (item=5)
+ok: [iabaquero] => (item=6)
+ok: [iabaquero] => (item=7)
+ok: [iabaquero] => (item=8)
+ok: [iabaquero] => (item=9)
+
+PLAY RECAP *********************************************************************
+iabaquero                  : ok=9    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+

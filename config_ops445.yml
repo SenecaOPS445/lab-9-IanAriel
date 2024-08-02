@@ -1,0 +1,53 @@
+---
+- hosts: iabaquero
+  user: student
+  become: yes
+  vars:
+    apache_version: 2.6
+    motd_warning: "WARNING: used by ICT faculty/students only.\n"
+    testserver: yes
+    seneca_id: iabaquero-duque
+  tasks:
+    - name: install apache
+      action: yum name=httpd state=latest
+    
+    - name: restart apache
+      service: 
+        name: httpd
+        state: restarted
+
+    - name: install EPEL
+      yum: 
+          name: epel-release 
+          state: present
+
+    - name: remove tree package
+      yum:
+        name: tree
+        state: absent 
+
+    - name: set hostname
+      hostname: 
+        name: "{{seneca_id}}"
+
+    - name: create a new user with my Seneca ID and sudo access
+      user:
+        name: "{{ seneca_id }}"
+        groups: wheel
+        append: yes
+        create_home: yes
+
+    - name: Configure SSH key for the new user
+      authorized_key:
+        user: "{{ seneca_id }}"
+        state: present
+        key: "{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
+
+    - name: Setup directory structure for labs
+      file:
+        path: "~/ops445/lab{{ item }}"
+        state: directory
+        owner: "{{ seneca_id }}"
+        group: "{{ seneca_id }}"
+        mode: '0755'
+      with_sequence: start=1 end=9
